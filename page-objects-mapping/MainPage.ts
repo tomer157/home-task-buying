@@ -123,9 +123,7 @@ export class MainPage {
         await this.iUtils.clearCookies(browser, URL)
     }
 
-    async updateEnv(){
-        await this.iUtils.updateEnv();
-    }
+  
 
     destroyinstance () {
         MainPage.instance = null;
