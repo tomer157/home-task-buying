@@ -10,7 +10,6 @@ interface IUtils {
 
 class UtilsClass implements IUtils {
     updateEnv(): void {
-        // Load environment variables from .env file
         dotenv.config();
         const envConfig = dotenv.parse(fs.readFileSync('.env'))
         for (const key in envConfig) {
@@ -21,18 +20,9 @@ class UtilsClass implements IUtils {
     async clearCookies(browser: Browser, url: string): Promise<void> {
         try {
             const context = await browser.newContext();
-            
-            // Navigate to the specified URL
             const page = await context.newPage();
             await page.goto(url);
-    
-            // Clear all cookies
             await context.clearCookies();
-    
-            // Optionally, perform actions like logging in or interacting with the site
-            // ...
-    
-            // Close the context
             await context.close();
         } catch (error) {
             console.error('Error clearing cookies:', error);
@@ -42,27 +32,6 @@ class UtilsClass implements IUtils {
 }
 
 
-
-const clearCookies = async (browser: Browser, url: string) => {
-    try {
-        const context = await browser.newContext();
-        
-        // Navigate to the specified URL
-        const page = await context.newPage();
-        await page.goto(url);
-
-        // Clear all cookies
-        await context.clearCookies();
-
-        // Optionally, perform actions like logging in or interacting with the site
-        // ...
-
-        // Close the context
-        await context.close();
-    } catch (error) {
-        console.error('Error clearing cookies:', error);
-    }
-};
 
 
 export default UtilsClass;

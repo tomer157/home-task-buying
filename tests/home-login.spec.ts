@@ -29,7 +29,6 @@ test.describe("Login Tests", () => {
         
         // Instantiate MainPage after page creation
         mainPage = new MainPage(page, utils); 
-        await utils.clearCookies(browser, URL); // Clear cookies
         await page.waitForTimeout(3333); // Adjust as necessary
     });
 
@@ -41,7 +40,9 @@ test.describe("Login Tests", () => {
 
     // Test to verify the login page title
     test("Open page and verify login", async () => {
+        mainPage.updateEnvFiles();
         await mainPage.goto();
+        await mainPage.clearCookies(browser, URL);
         await expect(page).toHaveTitle('Sign In with Auth0');
     });
 
@@ -86,13 +87,11 @@ test.describe("Login Tests", () => {
         await expect(policyPage).toBeVisible();
     });
 
-    // Test to log out
+    // Test to logout
     test("Logout", async () => {
-        await page.goto(URL);
-        const logoutBtn = page.locator('[data-id="button-user-menu"]');
-        const logoutUrl = page.locator('[href="/api/auth/logout"]');
-        await logoutBtn.click();
-        await logoutUrl.click();
+        await mainPage.goto();
+        await mainPage.clickLogoutBtn();
+        await mainPage.clickLogoutUrl();
         await expect(page).toHaveURL(new RegExp('^https://cropcycle-demo.us.auth0.com/login?'));
     });
 });

@@ -8,15 +8,6 @@ import IUtils from "../utils/utils"
 // Load environment variables from .env file
 dotenv.config();
 
-const reloadEnv = () => {
-    const envConfig = dotenv.parse(fs.readFileSync('.env'));
-    for (const key in envConfig) {
-        process.env[key] = envConfig[key];
-    }
-}
-
-// Reload .env variables
-reloadEnv();
 
 const URL: string = process.env.URL as string;
 const EMAIL: string = process.env.USERNAME as string; // This should return the full email
@@ -31,10 +22,12 @@ export class MainPage {
     private readonly forgotPassword: Locator;
     private readonly forgotEmailInput: Locator;
     private readonly forgotEmailSubmitBtn: Locator;
+    private readonly logoutBtn: Locator;
+    private readonly logoutUrl: Locator;
     static instance: MainPage | null  = null;
 
 
-    // TODO: Add freeze for imjutability and destroy object when done in the after hook
+   
     constructor(public readonly page: Page, private iUtils: IUtils) {
         // Singleton logic
         if (MainPage.instance) {
@@ -50,11 +43,24 @@ export class MainPage {
         this.forgotPassword = this.page.locator('[id="forgotswitcher"]');
         this.forgotEmailInput = this.page.locator('[id="forgotemail"]'); 
         this.forgotEmailSubmitBtn = this.page.locator('[id="btn-forgot"]');
+        this.logoutBtn = this.page.locator('[data-id="button-user-menu"]');
+        this.logoutUrl = this.page.locator('[href="/api/auth/logout"]');
     }
 
     async goto() {
         await this.page.goto(URL);
+    }
 
+    updateEnvFiles(){
+        this.iUtils.updateEnv()
+    }
+
+    async clickLogoutBtn() {
+        await this.logoutBtn.click();
+    }
+
+    async clickLogoutUrl () {
+        await this.logoutUrl.click();
     }
 
     async compareToSnapeshot() {
@@ -108,7 +114,7 @@ export class MainPage {
     }
 
     async validateLoginError(errorMessage: string) {
-        const errorLocator = this.page.locator('.error-message'); // Update the selector as needed
+        const errorLocator = this.page.locator('.error-message');
         await expect(errorLocator).toBeVisible();
         await expect(errorLocator).toHaveText(errorMessage);
     }
