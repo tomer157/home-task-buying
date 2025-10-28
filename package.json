@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test"
+    "test:chrome": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest",
+    "test:latests": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest --project=firefox-latest --project=edge-latest"
   },
   "keywords": [],
   "author": "",

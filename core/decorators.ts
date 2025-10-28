@@ -4,6 +4,11 @@ import path from 'path';
 import { Page } from '@playwright/test';
 import 'reflect-metadata';
 
+/*
+  A decorator that expand a known function without changing its functionality
+  By that helps log its behaviour before during and when its ends proccesses 
+  And log its failures
+*/
 export function Step(message: string) {
   return function (
     _target: any,

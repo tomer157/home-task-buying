@@ -38,13 +38,49 @@ export default defineConfig({
   projects: [
     // Chrome stable
     {
-      name: 'chromium',
+      name: 'chromium-latest',
       use: { ...devices['Desktop Chrome'], headless: false },
     },
 
     {
-      name: 'firefox',
+      name: 'chromium-beta',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome-beta',
+        headless: false,
+      },
+    },
+
+    // ---- firefox latest
+    {
+      name: 'firefox-latest',
       use: { ...devices['Desktop Firefox'] },
+    },
+
+    // --- 🦊 Firefox Developer Edition
+    {
+      name: 'firefox-dev',
+      use: {
+        ...devices['Desktop Firefox'],
+        channel: 'firefox-developer-edition',
+        headless: true,
+      },
+    },
+
+    // --- 🪟 Microsoft Edge Stable
+    {
+      name: 'edge-latest',
+      use: { ...devices['Desktop Edge'], channel: 'msedge', headless: true },
+    },
+
+    // // --- 🪟 Microsoft Edge Beta
+    {
+      name: 'edge-beta',
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge-beta',
+        headless: true,
+      },
     },
 
     // Microsoft Edge stable

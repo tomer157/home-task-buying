@@ -25,6 +25,8 @@ export class MainPage extends BasePage {
   private readonly loginBtnSecond?: string;
   private readonly userWelcomeMsgFirst?: string;
   private readonly userWelcomeMsgSecond?: string;
+  private readonly logOutBtnSelector?: string;
+  private readonly logOutBtnXpath?: string;
   static instance: MainPage | null = null;
   private readonly locatorFinder!: LocatorFinder;
 
@@ -47,6 +49,8 @@ export class MainPage extends BasePage {
     this.loginBtnFirst = "//button[text()='Log in']";
     this.loginBtnSecond =
       "//div[@class='modal-footer']/button[text()='Log in']";
+    this.logOutBtnSelector = "[id='logout2']";
+    this.logOutBtnXpath = "//a[@id='logout2']";
 
     this.userWelcomeMsgFirst = "[id='nameofuser']";
     this.userWelcomeMsgSecond = "//a[@id='nameofuser']";
@@ -122,6 +126,7 @@ export class MainPage extends BasePage {
 
   @Step('fill in the password field')
   async fillLoginPagePassword(password = PASSWORD): Promise<void> {
+    console.log('password param: ', password);
     const selectors = [this.passwordSelector, this.passwordXpath].filter(
       Boolean
     ) as unknown as string[];
@@ -182,6 +187,18 @@ export class MainPage extends BasePage {
       // ✅ Accept or dismiss the popup
       await dialog.accept(); // click OK
     });
+  }
+
+  @Step('Logout method')
+  async logout(): Promise<void> {
+    const selectors = [this.logOutBtnSelector, this.logOutBtnXpath].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'logout',
+      5555
+    );
   }
 
   async clearCookiesWithUtils(browser: any): Promise<void> {

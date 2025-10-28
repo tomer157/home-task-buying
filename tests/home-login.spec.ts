@@ -1,11 +1,11 @@
-import { test, chromium, Browser, expect } from '@playwright/test';
+import { test, chromium, Browser, expect, Page } from '@playwright/test';
 
 import { MainPage } from '../pages/MainPage';
 import UtilsClass from '../utils/utils';
 
 let browser: Browser;
 let context;
-let page;
+let page: Page;
 let utils: UtilsClass;
 let mainPage: MainPage;
 
@@ -25,6 +25,7 @@ test.describe('Login Tests', () => {
   });
 
   test.afterAll(async () => {
+    await mainPage.logout();
     await browser.close();
     mainPage.destroyinstance();
   });
@@ -47,22 +48,16 @@ test.describe('Login Tests', () => {
     await expect(welcomeMsg!).toHaveText('Welcome https://temp-mail.org/en');
   });
 
-  //TODO : ADD COOKIS AND SESSION DELETION
-  test('Logout', async () => {});
+  test('Logout Between Positive And Negative log Tests', async () => {
+    await mainPage.logout();
+  });
 
   test('Negative test authentication functionality ', async () => {
     await mainPage.clickLoginBtn();
-
     await mainPage.fillLoginPageUsername();
     await mainPage.fillLoginPagePassword('fffffffff');
     await mainPage.clickOnLogInBtn();
+    await page.waitForTimeout(333);
     await mainPage.handleLoginPopup();
-  });
-
-  //TODO : ADD COOKIS AND SESSION DELETION
-  test.skip('Logout', async () => {
-    // // Example placeholder
-    // await mainPage.clickLogoutBtn();
-    // await mainPage.clickLogoutUrl();
   });
 });
