@@ -1,15 +1,21 @@
 {
-  "name": "crop-testing-suite",
+  "name": "home-task-testing-suite",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.47.2",
     "@types/node": "^22.5.5",
+    "cross-env": "^10.1.0",
     "dotenv": "^16.4.5"
+  },
+  "dependencies": {
+    "reflect-metadata": "^0.2.2"
   }
 }

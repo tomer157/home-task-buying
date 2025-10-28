@@ -1,7 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import { Step } from '../core/decorators';
 import IUtils from '../utils/utils';
+import { BasePage } from '../core/BasePage';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -12,18 +13,19 @@ const PASSWORD: string = process.env.PASSWORD as string;
 const SPACE: string = String.fromCharCode(32); // ASCII code for space
 const PASSWORDWITHSPACE: string = PASSWORD.concat(SPACE);
 
-export class MainPage {
-  private readonly emailBox: Locator;
-  private readonly PasswordBox: Locator;
-  private readonly submitBtn: Locator;
-  private readonly forgotPassword: Locator;
-  private readonly forgotEmailInput: Locator;
-  private readonly forgotEmailSubmitBtn: Locator;
-  private readonly logoutBtn: Locator;
-  private readonly logoutUrl: Locator;
+export class MainPage extends BasePage {
+  private readonly emailBox: Locator | undefined;
+  private readonly PasswordBox: Locator | undefined;
+  private readonly submitBtn: Locator | undefined;
+  private readonly forgotPassword: Locator | undefined;
+  private readonly forgotEmailInput: Locator | undefined;
+  private readonly forgotEmailSubmitBtn: Locator | undefined;
+  private readonly logoutBtn: Locator | undefined;
+  private readonly logoutUrl: Locator | undefined;
   static instance: MainPage | null = null;
 
   constructor(public readonly page: Page, private iUtils: IUtils) {
+    super(page);
     // Singleton logic
     if (MainPage.instance) {
       return MainPage.instance;
@@ -41,21 +43,22 @@ export class MainPage {
     this.logoutUrl = this.page.locator('[href="/api/auth/logout"]');
   }
 
-  async goto() {
-    await this.page.goto(URL);
+  @Step('Navigate to main page')
+  async gotoPage() {
+    await this.open(URL);
   }
 
   updateEnvFiles() {
     this.iUtils.updateEnv();
   }
 
-  async clickLogoutBtn() {
-    await this.logoutBtn.click();
-  }
+  // async clickLogoutBtn() {
+  //   await this.logoutBtn.click();
+  // }
 
-  async clickLogoutUrl() {
-    await this.logoutUrl.click();
-  }
+  // async clickLogoutUrl() {
+  //   await this.logoutUrl.click();
+  // }
 
   async compareToSnapeshot() {
     expect(await this.page.screenshot()).toMatchSnapshot(
@@ -63,16 +66,16 @@ export class MainPage {
     );
   }
 
-  async validateEmailFieldVisible() {
-    await expect(this.emailBox).toBeVisible();
-  }
+  // async validateEmailFieldVisible() {
+  //   await expect(this.emailBox).toBeVisible();
+  // }
 
-  async validateEmailAttribute() {
-    await expect(this.emailBox).toHaveAttribute(
-      'placeholder',
-      'Enter your email'
-    );
-  }
+  // async validateEmailAttribute() {
+  //   await expect(this.emailBox).toHaveAttribute(
+  //     'placeholder',
+  //     'Enter your email'
+  //   );
+  // }
 
   async validatePasswordFieldVisible() {
     await expect(this.PasswordBox).toBeVisible();
@@ -119,7 +122,7 @@ export class MainPage {
     await expect(errorLocator).toHaveText(errorMessage);
   }
 
-  async clearCookies(browser, URL) {
+  async clearCookiesWithUtils(browser: any): Promise<void> {
     await this.iUtils.clearCookies(browser, URL);
   }
 

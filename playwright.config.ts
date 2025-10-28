@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -35,16 +34,45 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    // Chrome stable
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'],
-        headless:false },
-
+      name: 'chrome-stable',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome',
+        headless: false,
+      },
+    },
+    // Chrome Beta (simulates next version)
+    {
+      name: 'chrome-beta',
+      use: {
+        ...devices['Desktop Chrome'],
+        channel: 'chrome-beta',
+        headless: false,
+      },
     },
 
+    // Firefox (stable)
     {
-      name: 'firefox',
+      name: 'firefox-stable',
       use: { ...devices['Desktop Firefox'] },
+    },
+    // Microsoft Edge stable
+    {
+      name: 'edge-stable',
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge',
+      },
+    },
+    // Microsoft Edge Dev (different build)
+    {
+      name: 'edge-dev',
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge-dev',
+      },
     },
 
     // {
@@ -62,11 +90,6 @@ export default defineConfig({
     //   use: { ...devices['iPhone 12'] },
     // },
 
-  
-     {
-       name: 'Microsoft Edge',
-       use: { ...devices['Desktop Edge'], channel: 'msedge' },
-     },
     // {
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
