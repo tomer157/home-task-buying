@@ -15,14 +15,15 @@ let mainPage: MainPage;
 test.describe('Login Tests', () => {
   test.beforeAll(async () => {
     utils = new UtilsClass();
-    browser = await chromium.launch({ headless: true });
+    browser = await chromium.launch({ headless: false });
+
     context = await browser.newContext();
     page = await context.newPage();
 
     mainPage = new MainPage(page, utils);
 
     // optional: clean cookies and navigate to login page
-    await mainPage.clearCookiesWithUtils(context);
+    await mainPage.clearCookiesWithUtils(browser);
     await mainPage.gotoPage();
   });
 

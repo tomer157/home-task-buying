@@ -24,56 +24,34 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
-  },
+  baseURL: '',
+  trace: 'on-first-retry',
+  headless: false,
+  screenshot: 'on',
 
   /* Configure projects for major browsers */
   projects: [
     // Chrome stable
     {
-      name: 'chrome-stable',
-      use: {
-        ...devices['Desktop Chrome'],
-        channel: 'chrome',
-        headless: false,
-      },
-    },
-    // Chrome Beta (simulates next version)
-    {
-      name: 'chrome-beta',
-      use: {
-        ...devices['Desktop Chrome'],
-        channel: 'chrome-beta',
-        headless: false,
-      },
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], headless: false },
     },
 
-    // Firefox (stable)
     {
-      name: 'firefox-stable',
+      name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
     },
+
     // Microsoft Edge stable
-    {
-      name: 'edge-stable',
-      use: {
-        ...devices['Desktop Edge'],
-        channel: 'msedge',
-      },
-    },
-    // Microsoft Edge Dev (different build)
-    {
-      name: 'edge-dev',
-      use: {
-        ...devices['Desktop Edge'],
-        channel: 'msedge-dev',
-      },
-    },
+
+    // // Microsoft Edge Dev (different build)
+    // {
+    //   name: 'edge-dev',
+    //   use: {
+    //     ...devices['Desktop Edge'],
+    //     channel: 'msedge-dev',
+    //   },
+    // },
 
     // {
     //   name: 'webkit',

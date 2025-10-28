@@ -12,11 +12,9 @@ export function Step(message: string) {
   ) {
     // ✅ Guard for invalid usage
     if (!descriptor || typeof descriptor.value !== 'function') {
-      console.warn(
-        `⚠️ @Step('${message}') was applied to something not a method.`
-      );
       return;
     }
+
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
