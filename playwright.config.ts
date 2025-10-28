@@ -24,10 +24,15 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  baseURL: '',
-  trace: 'on-first-retry',
-  headless: false,
-  screenshot: 'on',
+  use: {
+    /* Base URL to use in actions like `await page.goto('/')`. */
+    baseURL: '',
+    trace: 'on-first-retry',
+    headless: true,
+    screenshot: 'on',
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+  },
 
   /* Configure projects for major browsers */
   projects: [

@@ -16,7 +16,7 @@ export class LocatorFinder {
   async waitForElement<T extends Locator>(
     selectors: string[],
     elementName: string,
-    timeout = 3000
+    timeout?: number
   ): Promise<T | undefined> {
     const totalLocators = selectors.length;
     let attempts = 0;
