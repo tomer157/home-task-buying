@@ -33,6 +33,8 @@ export class MainPage extends BasePage {
   private readonly secondaryLaptopsXapth?: string;
   private readonly monitorXpath?: string;
   private readonly secondaryMonitorXpath?: string;
+  private readonly cardContainerXpath?: string;
+  private readonly secondCardContainerXpath?: string;
   static instance: MainPage | null = null;
   private readonly locatorFinder!: LocatorFinder;
 
@@ -66,6 +68,9 @@ export class MainPage extends BasePage {
     this.secondaryLaptopsXapth = "(//a[text()='Laptops'])";
     this.monitorXpath = "//div[@class='list-group']//a[text()='Monitors']";
     this.secondaryMonitorXpath = "//a[text()='Monitors']";
+    this.cardContainerXpath = "//div[@id='tbodyid']/div";
+    this.secondCardContainerXpath =
+      "//div[@class='col-lg-9']//div[@id='tbodyid']/div";
   }
 
   @Step('Navigate to main page')
@@ -206,6 +211,21 @@ export class MainPage extends BasePage {
 
     await element?.waitFor({ state: 'visible', timeout: 5000 });
     await element?.click();
+  }
+
+  @Step('fetch cards container div')
+  async fetchCardsContainer(): Promise<Locator | undefined> {
+    const selectors = [
+      this.cardContainerXpath,
+      this.secondCardContainerXpath,
+    ].filter(Boolean) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'cards container',
+      5555
+    );
+    await element?.waitFor({ state: 'visible', timeout: 5000 });
+    return element;
   }
 
   @Step('validate welcome field message')

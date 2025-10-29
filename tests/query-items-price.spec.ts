@@ -2,12 +2,14 @@ import { test, chromium, Browser, expect, Page } from '@playwright/test';
 import { MainPage } from '../pages/MainPage';
 import UtilsClass from '../utils/utils';
 import Functions from '../special-functions/functions';
+import { CartPage } from '../pages/CartPage';
 
 let browser: Browser;
 let context;
 let page: Page;
 let utils: UtilsClass;
 let mainPage: MainPage;
+let cartPage: CartPage;
 let funcs: Functions;
 
 test.describe('Query items by price and quantity Tests', () => {
@@ -17,9 +19,9 @@ test.describe('Query items by price and quantity Tests', () => {
 
     context = await browser.newContext();
     page = await context.newPage();
-
+    cartPage = new CartPage(page, utils);
     mainPage = new MainPage(page, utils);
-    funcs = new Functions(mainPage, utils); // ✅ connect Functions with MainPage
+    funcs = new Functions(mainPage, cartPage, utils); // ✅ connect Functions with MainPage
 
     await mainPage.updateEnvFiles();
     await mainPage.clearCookiesWithUtils(browser);
@@ -84,6 +86,12 @@ test.describe('Query items by price and quantity Tests', () => {
   });
 
   test('Fetch monitors under 1200 USD (max 13 items) -- (so we will have to use next button )', async () => {
+    test.setTimeout(60000);
+
+    // Always start fresh before calling the function
+    await mainPage.gotoPage();
+    await page.waitForLoadState('networkidle');
+
     const urls = await funcs.searchItemsByNameUnderPrice(
       page,
       'monitors',

@@ -1,6 +1,8 @@
 import { Page, Locator } from '@playwright/test';
 import { MainPage } from '../pages/MainPage';
+import { CartPage } from '../pages/CartPage';
 import UtilsClass from '../utils/utils';
+import fs from 'fs';
 
 interface ProductItem {
   name: string;
@@ -14,7 +16,11 @@ interface CategoryStrategy {
 }
 
 export default class Functions {
-  constructor(private mainPage: MainPage, private utils: UtilsClass) {}
+  constructor(
+    private mainPage: MainPage,
+    private cartPage: CartPage,
+    private utils: UtilsClass
+  ) {}
 
   // This Strategy Pattern  map points to MainPage methods that return locators
   // So we can change behaviour and different products in runtime!
@@ -39,7 +45,9 @@ export default class Functions {
     );
     return key ? this.CategoryStrategies[key] : null;
   }
-
+  /*
+   task 4.1 fetch items under price and quantity conditions..
+  */
   async searchItemsByNameUnderPrice(
     page: Page,
     query: string,
@@ -99,7 +107,7 @@ export default class Functions {
         await nextButton.click();
         await page.waitForLoadState('networkidle');
         await page.waitForSelector('#tbodyid > div.col-lg-4', {
-          timeout: 5000,
+          timeout: 10000,
         });
 
         const nextCards = page.locator('#tbodyid > div.col-lg-4');
@@ -122,5 +130,38 @@ export default class Functions {
     }
 
     return foundItems.map((i) => i.url).slice(0, limit);
+  }
+
+  /*
+    Taks 4.2 add items to cart and log each one
+   */
+  async addItemsToCart(urls: string[], page: Page): Promise<void> {
+    if (!fs.existsSync('screenshots')) {
+      fs.mkdirSync('screenshots');
+    }
+
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+      const addToCartBtn = await this.cartPage.addItemToCart();
+      await addToCartBtn?.waitFor({ state: 'visible', timeout: 5000 });
+      await addToCartBtn?.click();
+
+      page.once('dialog', async (dialog) => {
+        await dialog.accept();
+      });
+
+      // Wait a short moment to ensure alert handled
+      await page.waitForTimeout(1500);
+
+      // ✅ Revisit product page again to take screenshot
+      await page.goto(url, { waitUntil: 'networkidle' });
+
+      // Take a screenshot for logs
+      const screenshotPath = `screenshots/item_${i + 1}.png`;
+      await page.screenshot({ path: screenshotPath, fullPage: true });
+      console.log(`📸 Screenshot saved: ${screenshotPath}`);
+    }
   }
 }

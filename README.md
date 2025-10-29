@@ -26,6 +26,23 @@ npm install
     1. In terminal type: npm run test:latests: For running on all browsers latests versions.
     2. In terminal type: npm run test:chrome: for running only on chrome (Preffered).
 
+
+    -----------------------------------------------------------------------------------
+
+## Parallell run and extra configuration explained:
+
+    fullyParallel: true → enables Playwright to run all tests simultaneously. (using parallel multi proccesses runs)
+    since node is single threded . and of course we can change that too!
+    ---------------------------------------------------------------------------------------------------------
+    workers: 4, // run up to 4 tests in parallel
+    Workers = the number of parallel Playwright processes that execute your test files at the same time.
+    The more workers you allow, the faster your suite runs — as long as your system can handle it.
+    If you turn this off (false), Playwright will run one test file at a time, sequentially.
+
+    ------------------------------------------------------------------------------------------------------------------------------------
+    retries → defines how many times Playwright should automatically retry a failing test (useful for handling flakiness or slow network conditions).
+    For example, on CI it retries twice, locally only once.
+
 ### Architecture Structure Explanation..
 
 The project follows a **clean Page Object Model (POM)** structure with clear separation between layers:
