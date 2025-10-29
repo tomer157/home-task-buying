@@ -45,7 +45,7 @@ test.describe('Login Tests', () => {
 
     const welcomeMsg = await mainPage.validateWelcomeFieldMsg();
     await expect(welcomeMsg!).toBeVisible();
-    await expect(welcomeMsg!).toHaveText('Welcome https://temp-mail.org/en');
+    await expect(welcomeMsg!).toHaveText('Welcome https://temp-mail.org/en'); // todo add to fixtures!
   });
 
   test('Logout Between Positive And Negative log Tests', async () => {
@@ -55,7 +55,7 @@ test.describe('Login Tests', () => {
   test('Negative test authentication functionality ', async () => {
     await mainPage.clickLoginBtn();
     await mainPage.fillLoginPageUsername();
-    await mainPage.fillLoginPagePassword('fffffffff');
+    await mainPage.fillLoginPagePassword('fffffffff'); // todo add to fixtures
     await mainPage.clickOnLogInBtn();
     await page.waitForTimeout(333);
     await mainPage.handleLoginPopup();

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:chrome": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest",
-    "test:latests": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest --project=firefox-latest --project=edge-latest"
+    "test:latests": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest --project=firefox-latest --project=edge-latest",
+    "test:function:4.1": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/query-items-price.spec.ts --project=chromium-latest"
   },
   "keywords": [],
   "author": "",

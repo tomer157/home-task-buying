@@ -26,7 +26,13 @@ export class MainPage extends BasePage {
   private readonly userWelcomeMsgFirst?: string;
   private readonly userWelcomeMsgSecond?: string;
   private readonly logOutBtnSelector?: string;
+  private readonly phonesXpath?: string;
+  private readonly secondaryPhoneXpath?: string;
   private readonly logOutBtnXpath?: string;
+  private readonly laptopsXpath?: string;
+  private readonly secondaryLaptopsXapth?: string;
+  private readonly monitorXpath?: string;
+  private readonly secondaryMonitorXpath?: string;
   static instance: MainPage | null = null;
   private readonly locatorFinder!: LocatorFinder;
 
@@ -54,6 +60,12 @@ export class MainPage extends BasePage {
 
     this.userWelcomeMsgFirst = "[id='nameofuser']";
     this.userWelcomeMsgSecond = "//a[@id='nameofuser']";
+    this.phonesXpath = "//a[text()='Phones']";
+    this.secondaryPhoneXpath = "//div[@class='list-group']//a[text()='Phones']";
+    this.laptopsXpath = "//div[@class='list-group']//a[text()='Laptops']";
+    this.secondaryLaptopsXapth = "(//a[text()='Laptops'])";
+    this.monitorXpath = "//div[@class='list-group']//a[text()='Monitors']";
+    this.secondaryMonitorXpath = "//a[text()='Monitors']";
   }
 
   @Step('Navigate to main page')
@@ -87,6 +99,45 @@ export class MainPage extends BasePage {
     const element = await this.locatorFinder.waitForElement<Locator>(
       selectors,
       'username'
+    );
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('open phones category')
+  async openPhonesCategory(): Promise<Locator | undefined> {
+    const selectors = [this.phonesXpath, this.secondaryPhoneXpath].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'phones category'
+    );
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('open laptops category')
+  async openLaptopsCategory(): Promise<Locator | undefined> {
+    const selectors = [this.laptopsXpath, this.secondaryLaptopsXapth].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'laptops category'
+    );
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('open monitors category')
+  async openMonitorsCategory(): Promise<Locator | undefined> {
+    const selectors = [this.monitorXpath, this.secondaryMonitorXpath].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'monitor category'
     );
     await element?.isVisible();
     return element;
