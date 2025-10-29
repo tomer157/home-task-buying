@@ -3,6 +3,14 @@ import { MainPage } from '../pages/MainPage';
 import UtilsClass from '../utils/utils';
 import Functions from '../special-functions/functions';
 import { CartPage } from '../pages/CartPage';
+import fs from 'fs';
+import path from 'path';
+
+const fixturePath = path.resolve(__dirname, '..', 'data', 'searchData.json');
+// 2) read and parse
+const fixtureRaw = fs.readFileSync(fixturePath, 'utf-8');
+const fixture = JSON.parse(fixtureRaw);
+console.log('fixture apple:: ', fixture.productsToCart[0]);
 
 let browser: Browser;
 let context;
@@ -31,19 +39,31 @@ test.describe('Add items to cart Tests', () => {
   test.afterAll(async () => {
     await browser.close();
     mainPage.destroyinstance();
+
+    // 🔹 Remove only .png files (not folder)
+    const screenshotDir = path.join(process.cwd(), 'screenshots');
+
+    if (fs.existsSync(screenshotDir)) {
+      const files = fs.readdirSync(screenshotDir);
+      for (const file of files) {
+        if (file.endsWith('.png')) {
+          fs.unlinkSync(path.join(screenshotDir, file));
+        }
+      }
+      console.log('🧹 Cleaned up screenshots folder (only PNGs removed).');
+    }
   });
 
   test('add', async () => {
     const screenshotDir = 'screenshots';
-    const pattern = /^cart_item_\d+\.png$/;
+    const pattern = /^item_\d+\.png$/;
 
     const before = await utils.countMatchingFiles(screenshotDir, pattern);
 
     const urls = [
-      'https://www.demoblaze.com/prod.html?idp_=10',
-      'https://www.demoblaze.com/prod.html?idp_=8',
-      'https://www.demoblaze.com/prod.html?idp_=14',
-      // ... more product URLs
+      fixture.productsToCart[0].url,
+      fixture.productsToCart[1].url,
+      fixture.productsToCart[2].url,
     ];
 
     await funcs.addItemsToCart(urls, page);
@@ -51,5 +71,18 @@ test.describe('Add items to cart Tests', () => {
     const after = await utils.countMatchingFiles(screenshotDir, pattern);
 
     expect(after - before).toBeGreaterThan(1);
+  });
+
+  test('test with empty params', async () => {
+    const screenshotDir = 'screenshots';
+    const pattern = /^item_\d+\.png$/;
+
+    const before = await utils.countMatchingFiles(screenshotDir, pattern);
+
+    await funcs.addItemsToCart([], page);
+
+    const after = await utils.countMatchingFiles(screenshotDir, pattern);
+
+    expect(after).toBe(before);
   });
 });

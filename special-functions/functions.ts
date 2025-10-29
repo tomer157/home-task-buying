@@ -140,6 +140,11 @@ export default class Functions {
       fs.mkdirSync('screenshots');
     }
 
+    if (!urls || urls.length === 0) {
+      console.warn('⚠️ No URLs provided to addItemsToCart.');
+      return;
+    }
+
     for (let i = 0; i < urls.length; i++) {
       const url = urls[i];
       await page.goto(url, { waitUntil: 'domcontentloaded' });

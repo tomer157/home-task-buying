@@ -1,0 +1,19 @@
+{
+  "productsToCart": [
+    {
+      "url": "https://www.demoblaze.com/prod.html?idp_=10",
+      "name": "Apple monitor",
+      "price": "400"
+    },
+    {
+      "url": "https://www.demoblaze.com/prod.html?idp_=8",
+      "name": "Sony laptop",
+      "price": "790"
+    },
+    {
+      "url": "https://www.demoblaze.com/prod.html?idp_=4",
+      "name": "Samsung phone",
+      "price": "800"
+    }
+  ]
+}

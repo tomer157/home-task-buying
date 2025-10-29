@@ -19,13 +19,19 @@ Clone the repository to your local machine:
 
 git clone <private repository URL will be provided>
 cd <project-directory>
-npm install
+
+- then follow the installation:
+  npm install
+  npx playwright install firefox-beta
+  npx playwright install msedge-beta
+  npx playwright install chrome-beta
 
 ## how to run tests:
 
-    1. In terminal type: npm run test:latests: For running on all browsers latests versions.
+    1. In terminal type: npm run test:login:latests: For running login tests on all browsers latests versions.
     2. In terminal type: npm run test:chrome: for running only on chrome (Preffered).
-
+    3. In terminal type npm run test:function:4.1 for running the 4.1 task and etc.....
+    4. In terminal type run test:login:beta:versions for running login tests on all browsers beta-versions.
 
     -----------------------------------------------------------------------------------
 
@@ -57,6 +63,8 @@ This modular approach allows easy maintenance, parallel execution, and resilienc
 ### Reports
 
 - By default, Playwright generates an **HTML report** located at: playwright-report/index.html
+- its also possible and reccomeneded to use the built in playright's -webserver which will serve the result on your local machine:
+  just type in the terminal: npx playwright show-report. and you clearly know the coverage , flaky test how many faild and how many had passed.
 
 ### Error loggers:
 

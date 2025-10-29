@@ -62,7 +62,7 @@ export default defineConfig({
       name: 'firefox-dev',
       use: {
         ...devices['Desktop Firefox'],
-        channel: 'firefox-developer-edition',
+        channel:  'firefox-beta',
         headless: true,
       },
     },

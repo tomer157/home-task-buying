@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test:chrome": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest",
-    "test:latests": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test --project=chromium-latest --project=firefox-latest --project=edge-latest",
-    "test:function:4.1": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/query-items-price.spec.ts --project=chromium-latest"
+    "test:login:latests": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/home-login.spec.ts --project=chromium-latest --project=firefox-latest --project=edge-latest",
+    "test:function:4.1": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/query-items-price.spec.ts --project=chromium-latest",
+    "test:function:4.2": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/add-items-to-cart.spec.ts --project=chromium-latest",
+    "test:function:auth": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/home-login.spec.ts  --project=chromium-latest",
+    "test:login:beta:versions": "cross-env TS_NODE_PROJECT=./tsconfig.json npx playwright test tests/home-login.spec.ts --project=chromium-beta --project=firefox-dev --project=edge-beta"
   },
   "keywords": [],
   "author": "",
