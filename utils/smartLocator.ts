@@ -11,6 +11,8 @@ export class LocatorFinder {
    * Attempts to locate an element using multiple selectors (fallback mechanism).
    * Retries automatically based on number of selectors provided.
    * Logs all attempts clearly for debugging.
+   * T
+   * ... The waitForElement generic for the possibility to accept various types of selectors......
    */
   @Step('Find element using multiple locators with fallback and retries')
   async waitForElement<T extends Locator>(

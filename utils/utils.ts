@@ -1,4 +1,4 @@
-import { Browser, Page, BrowserContext } from 'playwright'; // Make sure to import the correct type
+import { Browser } from 'playwright'; // Make sure to import the correct type
 import dotenv from 'dotenv';
 import fs from 'fs';
 import { promises as fsp } from 'fs';

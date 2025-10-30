@@ -69,7 +69,7 @@ export default class Functions {
 
     // Open category and wait for cards
     await categoryButton.click();
-    await page.waitForSelector('#tbodyid > div.col-lg-4', { timeout: 5000 });
+    await page.waitForSelector('#tbodyid > div.col-lg-4', { timeout: 7500 });
 
     const foundItems: ProductItem[] = [];
 
@@ -86,8 +86,8 @@ export default class Functions {
 
         try {
           await Promise.all([
-            nameLoc.waitFor({ state: 'attached', timeout: 1500 }),
-            priceLoc.waitFor({ state: 'attached', timeout: 1500 }),
+            nameLoc.waitFor({ state: 'attached', timeout: 2300 }),
+            priceLoc.waitFor({ state: 'attached', timeout: 2300 }),
           ]);
 
           const name = (await nameLoc.textContent())?.trim() || '';
@@ -121,7 +121,7 @@ export default class Functions {
       if (hasNext) {
         console.log('➡️ Clicking Next to fetch more items...');
         await nextButton.click();
-        await page.waitForLoadState('networkidle');
+        // await page.waitForLoadState('networkidle');
         await page.waitForSelector('#tbodyid > div.col-lg-4', {
           timeout: 10000,
         });
@@ -137,8 +137,8 @@ export default class Functions {
 
           try {
             await Promise.all([
-              nameLoc.waitFor({ state: 'attached', timeout: 1500 }),
-              priceLoc.waitFor({ state: 'attached', timeout: 1500 }),
+              nameLoc.waitFor({ state: 'attached', timeout: 2300 }),
+              priceLoc.waitFor({ state: 'attached', timeout: 2300 }),
             ]);
 
             const name = (await nameLoc.textContent())?.trim() || '';
@@ -238,7 +238,7 @@ export default class Functions {
 
     await page.waitForLoadState('networkidle');
 
-    // 2) Try to read the total if it exists (empty cart = no #totalp)
+    // 2) Try to read the total if it exists
     const totalLocator = await this.cartPage.cartTotalHeader();
 
     let totalText = '0';
