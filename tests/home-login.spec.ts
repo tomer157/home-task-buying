@@ -2,12 +2,19 @@ import { test, chromium, Browser, expect, Page } from '@playwright/test';
 
 import { MainPage } from '../pages/MainPage';
 import UtilsClass from '../utils/utils';
+import path from 'path';
+import fs from 'fs';
 
 let browser: Browser;
 let context;
 let page: Page;
 let utils: UtilsClass;
 let mainPage: MainPage;
+
+const fixturePath = path.resolve(__dirname, '..', 'data', 'searchData.json');
+// 2) read and parse
+const fixtureRaw = fs.readFileSync(fixturePath, 'utf-8');
+const fixture = JSON.parse(fixtureRaw);
 
 test.describe('Login Tests', () => {
   test.beforeAll(async () => {
@@ -45,7 +52,7 @@ test.describe('Login Tests', () => {
 
     const welcomeMsg = await mainPage.validateWelcomeFieldMsg();
     await expect(welcomeMsg!).toBeVisible();
-    await expect(welcomeMsg!).toHaveText('Welcome https://temp-mail.org/en'); // todo add to fixtures!
+    await expect(welcomeMsg!).toHaveText(fixture.welcomePageHeader); // todo add to fixtures!
   });
 
   test('Logout Between Positive And Negative log Tests', async () => {
@@ -55,7 +62,7 @@ test.describe('Login Tests', () => {
   test('Negative test authentication functionality ', async () => {
     await mainPage.clickLoginBtn();
     await mainPage.fillLoginPageUsername();
-    await mainPage.fillLoginPagePassword('fffffffff'); // todo add to fixtures
+    await mainPage.fillLoginPagePassword(fixture.badData.login); // todo add to fixtures
     await mainPage.clickOnLogInBtn();
     await page.waitForTimeout(333);
     await mainPage.handleLoginPopup();

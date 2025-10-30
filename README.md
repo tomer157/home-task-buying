@@ -29,9 +29,9 @@ cd <project-directory>
 ## how to run tests:
 
     1. In terminal type: npm run test:login:latests: For running login tests on all browsers latests versions.
-    2. In terminal type: npm run test:chrome: for running only on chrome (Preffered).
-    3. In terminal type npm run test:function:4.1 for running the 4.1 task and etc.....
-    4. In terminal type run test:login:beta:versions for running login tests on all browsers beta-versions.
+    2. In terminal type npm run test:function:4.1 for running the 4.1 task and etc.....
+    3. In terminal type npm run test:login:beta:versions for running login tests on all browsers beta-versions.
+    4. In terminal type npm run  test:function:4.1 ... 4.2 .... 4.3 for the specific tasks
 
     -----------------------------------------------------------------------------------
 
