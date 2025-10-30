@@ -21,7 +21,7 @@ test.describe('Query items by price and quantity Tests', () => {
     page = await context.newPage();
     cartPage = new CartPage(page, utils);
     mainPage = new MainPage(page, utils);
-    funcs = new Functions(mainPage, cartPage, utils); // ✅ connect Functions with MainPage
+    funcs = new Functions(mainPage, cartPage, utils); // connect Functions with MainPage and cartPage......
 
     await mainPage.updateEnvFiles();
     await mainPage.clearCookiesWithUtils(browser);
@@ -41,8 +41,6 @@ test.describe('Query items by price and quantity Tests', () => {
       5
     );
 
-    console.log('✅ Found URLs:', urls);
-
     // Expect non-empty array and all links to include 'prod.html'
     expect(urls.length).toBeGreaterThan(0);
     for (const url of urls) {
@@ -57,8 +55,6 @@ test.describe('Query items by price and quantity Tests', () => {
       900,
       5
     );
-
-    console.log('✅ Found URLs:', urls);
 
     // Basic validations
     expect(urls.length).toBeGreaterThan(0);
@@ -93,8 +89,6 @@ test.describe('Query items by price and quantity Tests', () => {
       1200,
       13
     );
-
-    console.log('✅ Found URLs:', urls);
 
     expect(urls.length).toBeGreaterThan(0);
   });
