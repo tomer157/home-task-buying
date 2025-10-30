@@ -10,6 +10,10 @@ export class CartPage extends BasePage {
   private readonly locatorFinder!: LocatorFinder;
   private readonly addToCartXpath?: string;
   private readonly secondaryAddToCartXpath?: string;
+  private readonly navbarCartBtnSelector?: string;
+  private readonly navbarCartBtnXpath?: string;
+  private readonly totalPriceSelector?: string;
+  private readonly totalPriceXpath?: string;
 
   constructor(public readonly page: Page, private iUtils: IUtils) {
     super(page);
@@ -22,6 +26,10 @@ export class CartPage extends BasePage {
     this.locatorFinder = new LocatorFinder(page);
     this.addToCartXpath = "//a[text()='Add to cart']";
     this.secondaryAddToCartXpath = "//div//a[text()='Add to cart']";
+    this.navbarCartBtnSelector = "a[id='cartur']";
+    this.navbarCartBtnXpath = "//a[@id='cartur']";
+    this.totalPriceSelector = "h3[id='totalp']";
+    this.totalPriceXpath = "//h3[@id='totalp']";
   }
 
   @Step('add item to cart functionality')
@@ -33,6 +41,35 @@ export class CartPage extends BasePage {
     const element = await this.locatorFinder.waitForElement<Locator>(
       selectors,
       'Add to cart Button'
+    );
+
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('return  navbar cart button element')
+  async cartBtnElement(): Promise<Locator | undefined> {
+    const selectors = [
+      this.navbarCartBtnSelector,
+      this.navbarCartBtnXpath,
+    ].filter(Boolean) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'Cart button'
+    );
+
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('return cart total ')
+  async cartTotalHeader(): Promise<Locator | undefined> {
+    const selectors = [this.totalPriceSelector, this.totalPriceXpath].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'Cart total'
     );
 
     await element?.isVisible();
