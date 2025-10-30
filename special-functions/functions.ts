@@ -273,4 +273,39 @@ export default class Functions {
       `Cart total "${totalText}" parsed as ${totalNumber} must be ≤ ${threshold} (budget ${budgetPerItem} × items ${itemsCount}). Screenshot: ${screenshotPath}`
     ).toBeLessThanOrEqual(threshold);
   }
+
+  // empty cart func
+  async clearCart(page: Page): Promise<void> {
+    // open cart
+    const addToCartBtn = await this.cartPage.cartBtnElement();
+    await addToCartBtn?.waitFor({ state: 'visible', timeout: 5000 });
+    await addToCartBtn?.click();
+
+    // tbody (the cart table body)
+    const tbody = await this.cartPage.cartBodyElement(); // should be locator('[id="tbodyid"]')
+    if (!tbody) return; // nothing to clear (defensive)
+    await tbody.waitFor({ state: 'visible', timeout: 5000 });
+
+    // 3) rows locator (not optional)
+    const rows = tbody.locator('tr');
+
+    // ✅ EARLY EXIT: if cart is empty, stop right away
+    const initialCount = await rows.count();
+    if (initialCount === 0) {
+      console.log('🧺 Cart already empty — nothing to delete.');
+      // optional: return to main page
+      // await this.mainPage.gotoPage();
+      return;
+    }
+
+    // keep deleting the first row until none left
+    while ((await rows.count()) > 0) {
+      await rows.first().getByText('Delete', { exact: true }).click();
+      // tiny settle so DOM updates before next iteration
+      await page.waitForTimeout(300);
+    }
+
+    // go back to main page
+    //  await this.mainPage.gotoPage();
+  }
 }

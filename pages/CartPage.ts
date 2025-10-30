@@ -14,6 +14,8 @@ export class CartPage extends BasePage {
   private readonly navbarCartBtnXpath?: string;
   private readonly totalPriceSelector?: string;
   private readonly totalPriceXpath?: string;
+  private readonly cartBodySelector?: string;
+  private readonly cartBodyXpath?: string;
 
   constructor(public readonly page: Page, private iUtils: IUtils) {
     super(page);
@@ -30,6 +32,8 @@ export class CartPage extends BasePage {
     this.navbarCartBtnXpath = "//a[@id='cartur']";
     this.totalPriceSelector = "h3[id='totalp']";
     this.totalPriceXpath = "//h3[@id='totalp']";
+    this.cartBodySelector = "tbody[id='tbodyid']";
+    this.cartBodyXpath = "//tbody[@id='tbodyid']";
   }
 
   @Step('add item to cart functionality')
@@ -70,6 +74,20 @@ export class CartPage extends BasePage {
     const element = await this.locatorFinder.waitForElement<Locator>(
       selectors,
       'Cart total'
+    );
+
+    await element?.isVisible();
+    return element;
+  }
+
+  @Step('return cart table body element')
+  async cartBodyElement(): Promise<Locator | undefined> {
+    const selectors = [this.cartBodyXpath, this.cartBodySelector].filter(
+      Boolean
+    ) as unknown as string[];
+    const element = await this.locatorFinder.waitForElement<Locator>(
+      selectors,
+      'Cart table body'
     );
 
     await element?.isVisible();

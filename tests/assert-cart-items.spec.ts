@@ -42,6 +42,8 @@ test.describe('Assert cart total tests', () => {
   });
 
   test('assert cart laptops with price 1500 and count 5 ', async () => {
+    // first cleanup the cart
+
     const urls = await funcs.searchItemsByNameUnderPrice(
       page,
       'laptops',
@@ -51,8 +53,6 @@ test.describe('Assert cart total tests', () => {
     await funcs.addItemsToCart(urls, page);
     await funcs.assertCartTotalNotExceeds(1500, urls.length);
   });
-
-  test('delete all cart products', async () => {});
 
   test('negative test cart laptops with under price   ', async () => {
     const urls = await funcs.searchItemsByNameUnderPrice(
