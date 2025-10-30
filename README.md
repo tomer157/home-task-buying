@@ -17,8 +17,8 @@ The suite is modular, reusable, and easily extendable for future test cases.
 
 Clone the repository to your local machine:
 
-git clone <private repository URL will be provided>
-cd <project-directory>
+git clone <private repository URL will be provided in the email...> ----> branch Master!
+cd <ness-home-assignment>
 
 - then follow the installation:
   npm install
