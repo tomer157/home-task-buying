@@ -74,6 +74,6 @@ This modular approach allows easy maintenance, parallel execution, and resilienc
 
 - All test non secret data will fetched from data\searchData.json
 
-```
+### Ci-Cd optional:
 
-```
+- Ive also added docker file for build containerazation and a general bash file for running the specs on a pipeline

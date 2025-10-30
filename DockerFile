@@ -1,0 +1,21 @@
+# Use Playwright's official image with all dependencies
+FROM mcr.microsoft.com/playwright:v1.55.0-jammy
+
+# Set working directory
+WORKDIR /app
+
+# Install tar for kubectl cp support
+RUN apt-get update && apt-get install -y tar
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Optional: Build if using TypeScript
+# RUN npm run build
+
+# Default command (can be overridden by Kubernetes job)
+CMD ["npx", "playwright", "test"]

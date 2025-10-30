@@ -26,8 +26,7 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Coverage (אם תריץ בעתיד)
-coverage/
+
 
 # Temporary files
 *.tmp
