@@ -10,7 +10,6 @@ const fixturePath = path.resolve(__dirname, '..', 'data', 'searchData.json');
 // 2) read and parse
 const fixtureRaw = fs.readFileSync(fixturePath, 'utf-8');
 const fixture = JSON.parse(fixtureRaw);
-console.log('fixture apple:: ', fixture.productsToCart[0]);
 
 let browser: Browser;
 let context;
@@ -50,7 +49,6 @@ test.describe('Add items to cart Tests', () => {
           fs.unlinkSync(path.join(screenshotDir, file));
         }
       }
-      console.log('🧹 Cleaned up screenshots folder (only PNGs removed).');
     }
   });
 

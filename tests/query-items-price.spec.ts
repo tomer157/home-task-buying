@@ -73,22 +73,17 @@ test.describe('Query items by price and quantity Tests', () => {
       3
     );
 
-    console.log('✅ Found URLs:', urls);
-
     expect(urls.length).toBeGreaterThan(0);
   });
 
   test('Negative-test try to fetch a non existance product', async () => {
     const urls = await funcs.searchItemsByNameUnderPrice(page, 'shoes', 700, 6);
-    console.log('✅ Found URLs:', urls);
-
     expect(urls.length).toBe(0);
   });
 
   test('Fetch monitors under 1200 USD (max 13 items) -- (so we will have to use next button )', async () => {
     test.setTimeout(60000);
 
-    // Always start fresh before calling the function
     await mainPage.gotoPage();
     await page.waitForLoadState('networkidle');
 

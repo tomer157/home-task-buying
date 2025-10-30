@@ -30,7 +30,6 @@ export function Step(message: string) {
       const timestamp = new Date().toISOString();
       const log = (text: string) => {
         const line = `[${timestamp}] ${text}\n`;
-        console.log(text);
         fs.appendFileSync(logFile, line);
       };
 

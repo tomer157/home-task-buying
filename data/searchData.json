@@ -20,5 +20,7 @@
       "name": "Samsung phone",
       "price": "800"
     }
-  ]
+  ],
+
+  "productsTypes": ["laptops"]
 }

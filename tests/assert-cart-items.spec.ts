@@ -10,7 +10,6 @@ const fixturePath = path.resolve(__dirname, '..', 'data', 'searchData.json');
 // 2) read and parse
 const fixtureRaw = fs.readFileSync(fixturePath, 'utf-8');
 const fixture = JSON.parse(fixtureRaw);
-console.log('fixture apple:: ', fixture.productsToCart[0]);
 
 let browser: Browser;
 let context;
@@ -42,11 +41,9 @@ test.describe('Assert cart total tests', () => {
   });
 
   test('assert cart laptops with price 1500 and count 5 ', async () => {
-    // first cleanup the cart
-
     const urls = await funcs.searchItemsByNameUnderPrice(
       page,
-      'laptops',
+      fixture.productsTypes[0],
       1500,
       5
     );
@@ -57,12 +54,11 @@ test.describe('Assert cart total tests', () => {
   test('negative test cart laptops with under price   ', async () => {
     const urls = await funcs.searchItemsByNameUnderPrice(
       page,
-      'laptops',
+      fixture.productsTypes[0],
       200,
       5
     );
 
-    // ✅ Core negative assertion: nothing should match ≤ 200
     expect(urls.length).toBe(0);
 
     await funcs.addItemsToCart(urls, page);

@@ -177,7 +177,6 @@ export class MainPage extends BasePage {
     await element?.waitFor({ state: 'visible', timeout: 5000 });
     await this.page.waitForTimeout(300);
     await element?.fill(email);
-    console.log('✅ Username filled successfully');
   }
 
   @Step('fill in the password field')
